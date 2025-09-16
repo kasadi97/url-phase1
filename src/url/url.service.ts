@@ -6,6 +6,24 @@ import { nanoid } from 'nanoid';
 export class UrlService {
   constructor(private prisma: PrismaService) {}
 
+  async shortenUrlForUser(originalUrl:string, userId: number){
+    const shortCode = nanoid(8);
+
+    const url = await this.prisma.url.create({
+      data: {
+        originalUrl,
+        shortCode,
+        userId,  // ✅ сохраняем владельца
+      },
+    });
+
+    return {
+      shortUrl: `http://localhost:3000/${shortCode}`,
+      originalUrl: url.originalUrl,
+      userId: url.userId,
+    };
+  }
+
   async shortenUrl(originalUrl: string) {
     // 1. Генерация короткого кода
     const shortCode = nanoid(8); // короткий код длиной 8 символов

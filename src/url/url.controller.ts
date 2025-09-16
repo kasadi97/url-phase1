@@ -1,13 +1,17 @@
-import { Body, Controller, Get, Param, Post, } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards, } from '@nestjs/common';
 import { UrlService } from './url.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('url')
 export class UrlController {
     constructor(private readonly urlService: UrlService) {}
 
-  @Post('shorten')
-  async shorten(@Body('originalUrl') originalUrl: string) {
-    return this.urlService.shortenUrl(originalUrl);
+  @UseGuards(AuthGuard('jwt'))
+  @Post('shorten-user')
+  async shorten(@Body('originalUrl') originalUrl: string, @Req() req) {
+    //req.user -- object that returns jwtStrategy.validate()
+    const user = req.user;
+    return this.urlService.shortenUrlForUser(originalUrl, user.id);
   }
 
   @Get('stats/:shortCode')
