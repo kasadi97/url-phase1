@@ -41,4 +41,14 @@ export class UrlService {
     });
   }
 
-}
+  async getStats(shortCode: string ){
+    return this.prisma.url.findUnique({
+      where: {shortCode},
+      select:{
+        originalUrl: true,
+        shortCode: true,
+        clicks: true,
+        createdAt:true,
+      },
+    });
+  }}
