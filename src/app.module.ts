@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { UrlModule } from './url/url.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { PrismaService } from './prisma/prisma.service';
+//import { RedirectController } from './redirect/redirect.controller';
+import { RedirectModule } from './redirect/redirect.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [PrismaModule, UrlModule, RedirectModule],
+  //controllers: [RedirectController],
+  providers: [ PrismaService],
 })
 export class AppModule {}
