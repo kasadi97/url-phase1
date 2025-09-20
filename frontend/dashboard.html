@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <button onclick="logout()">Logout</button>
+
+  <h2>Shorten URL</h2>
+  <input type="text" id="url-input" placeholder="Enter URL">
+  <button onclick="shorten()">Shorten</button>
+
+  <h2>Your URLs</h2>
+  <ul id="url-list"></ul>
+
+  <script src="js/api.js"></script>
+  <script>
+    async function loadUrls() {
+      try {
+        const urls = await api("/url");
+        const list = document.getElementById("url-list");
+        list.innerHTML = "";
+        urls.forEach(url => {
+          const li = document.createElement("li");
+          li.innerHTML = `${url.originalUrl} → 
+            <a href="http://localhost:3000/r/${url.shortCode}" target="_blank">
+              http://localhost:3000/r/${url.shortCode}
+            </a>`;
+          list.appendChild(li);
+        });
+      } catch {
+        alert("Please login first");
+        window.location = "login.html";
+      }
+    }
+
+    async function shorten() {
+      const input = document.getElementById("url-input");
+      if (!input.value) return;
+      await api("/url", "POST", { originalUrl: input.value });
+      input.value = "";
+      loadUrls();
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      window.location = "login.html";
+    }
+
+    loadUrls();
+  </script>
+</body>
+</html>
