@@ -1,39 +1,37 @@
-URL Shortener
+# URL Shortener
 
-A simple URL shortening service built with Node.js, NestJS, and Prisma. Users can register, log in, and shorten URLs, getting a short code that redirects to the original URL.
+A simple **URL shortening service** built with Node.js, NestJS, and Prisma. Users can register, log in, and shorten URLs, getting a short code that redirects to the original URL.
 
-Features
+---
 
-User authentication (register & login)
+## 🚀 Features
 
-Shorten URLs for logged-in users
+- User authentication (register & login)
+- Shorten URLs for logged-in users
+- Redirect short URLs to the original URL
+- Minimalistic, clean API design
+- Optional front-end integration
 
-Redirect short URLs to the original URL
+---
 
-Minimalistic, clean API design
+## 🛠 Tech Stack
 
-Optional front-end integration
+- **Backend:** Node.js, NestJS, Prisma  
+- **Database:** PostgreSQL (or your preferred DB)  
+- **Authentication:** JWT  
+- **Frontend (optional):** React / Vanilla JS  
 
-Tech Stack
+---
 
-Backend: Node.js, NestJS, Prisma
+## ⚡ Installation
 
-Database: PostgreSQL (or your preferred DB)
+1. Clone the repository:
 
-Authentication: JWT
-
-Frontend (optional): React / Vanilla JS
-
-Installation
-
-Clone the repository:
-
+```bash
 git clone https://github.com/your-username/urlshortener.git
 cd urlshortener
 
-
-Install dependencies:
-
+2. Install dependencies:
 npm install
 
 
@@ -54,9 +52,9 @@ Start the server:
 npm run start:dev
 
 
-Server should be running at http://localhost:3000.
+Server should be running at: http://localhost:3000
 
-API Endpoints
+📌 API Endpoints
 Authentication
 
 POST /auth/register – Register a new user
@@ -69,7 +67,7 @@ POST /url/shorten-user – Shorten a URL (requires authentication)
 
 GET /:shortCode – Redirect to the original URL
 
-Example
+📝 Example Request
 curl -X POST http://localhost:3000/url/shorten-user \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json" \
@@ -84,6 +82,6 @@ Response:
   "userId": 1
 }
 
-License
+📄 License
 
-This project is licensed under the MIT License.
+MIT License
