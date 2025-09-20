@@ -87,6 +87,10 @@ Response:
   "userId": 1
 }
 ```
+## Screenshot
+<img width="1067" height="632" alt="image" src="https://github.com/user-attachments/assets/95dcc62c-fc6f-4053-8f39-5f18f34b6ed6" />
+
+
 📄 License
 
 MIT License
