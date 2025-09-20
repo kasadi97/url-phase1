@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>URL Stats</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #6f42c1;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #563d7c;
+    }
+    .message {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .error { color: red; }
+    .result {
+      margin-top: 15px;
+      padding: 10px;
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>URL Stats</h2>
+    <form id="statsForm">
+      <input type="text" id="shortCode" placeholder="Enter short code (e.g. abc12345)" required />
+      <button type="submit">Get Stats</button>
+    </form>
+    <div id="message" class="message"></div>
+    <div id="result" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    document.getElementById("statsForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const shortCode = document.getElementById("shortCode").value.trim();
+      const messageEl = document.getElementById("message");
+      const resultEl = document.getElementById("result");
+
+      try {
+        const res = await fetch(`http://localhost:3000/url/stats/${shortCode}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to fetch stats");
+        }
+
+        messageEl.textContent = "";
+        resultEl.style.display = "block";
+        resultEl.innerHTML = `
+          <p><strong>Original URL:</strong> ${data.originalUrl}</p>
+          <p><strong>Short Code:</strong> ${data.shortCode}</p>
+          <p><strong>Clicks:</strong> ${data.clicks}</p>
+          <p><strong>Created At:</strong> ${new Date(data.createdAt).toLocaleString()}</p>
+        `;
+      } catch (err) {
+        messageEl.textContent = "❌ " + err.message;
+        messageEl.className = "message error";
+        resultEl.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

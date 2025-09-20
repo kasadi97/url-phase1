@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="logo">Shortly</h1>
+        <h2>Welcome</h2>
+        <p>Sign up or log in to shorten and manage your links.</p>
+        <div class="auth-buttons">
+          <a href="register.html" class="btn">Sign Up</a>
+          <a href="login.html" class="btn btn-outline">Login</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feature">
+        <h3>🔐 Secure</h3>
+        <p>Your links are safe and private with your account.</p>
+      </div>
+      <div class="feature">
+        <h3>📂 Organized</h3>
+        <p>Manage all your shortened links in one place.</p>
+      </div>
+      <div class="feature">
+        <h3>⚡ Fast</h3>
+        <p>Shorten and access your links instantly after login.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Shortly. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Redirect if already logged in
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      window.location.href = "shorten.html";
+    }
+  </script>
+</body>
+</html>
