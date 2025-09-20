@@ -29,28 +29,31 @@ A simple **URL shortening service** built with Node.js, NestJS, and Prisma. User
 
 ```bash
 git clone https://github.com/your-username/urlshortener.git
-cd urlshortener
+cd urlshortener 
+```
 
 2. Install dependencies:
+```
 npm install
-
+```
 
 Set up your .env file:
-
+```
 DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DBNAME
 JWT_SECRET=your_jwt_secret
 PORT=3000
-
+```
 
 Run database migrations:
-
+```
 npx prisma migrate dev
-
+```
 
 Start the server:
 
+```
 npm run start:dev
-
+```
 
 Server should be running at: http://localhost:3000
 
@@ -67,21 +70,23 @@ POST /url/shorten-user – Shorten a URL (requires authentication)
 
 GET /:shortCode – Redirect to the original URL
 
+
 📝 Example Request
+```
 curl -X POST http://localhost:3000/url/shorten-user \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json" \
 -d '{"originalUrl": "https://google.com"}'
-
+```
 
 Response:
-
+```
 {
   "shortUrl": "http://localhost:3000/ioegnS6i",
   "originalUrl": "https://google.com",
   "userId": 1
 }
-
+```
 📄 License
 
 MIT License
