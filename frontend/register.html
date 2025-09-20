@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Shortly</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="logo">Shortly</h1>
+        <h2>Register</h2>
+        <p>Create an account to start shortening links.</p>
+
+        <div class="form-card">
+          <form id="registerForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" class="btn">Register</button>
+          </form>
+          <p class="switch-auth">Already have an account? <a href="login.html">Login</a></p>
+          <p id="errorMsg" class="error-msg"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Shortly. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      window.location.href = "shorten.html";
+    }
+
+    const form = document.getElementById("registerForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorMsg.textContent = "";
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch("http://localhost:3000/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.message || "Registration failed");
+        }
+
+        const data = await res.json();
+        localStorage.setItem("accessToken", data.accessToken);
+        window.location.href = "shorten.html";
+      } catch (err) {
+        errorMsg.textContent = err.message;
+      }
+    });
+  </script>
+</body>
+</html>
